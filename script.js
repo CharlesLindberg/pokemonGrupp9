@@ -98,6 +98,9 @@ const PokedexData = [
     url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/97.png",
   },
 ];
+
+let filterBtn = document.querySelector("#filter");
+
 // Funktion för att skapa HTML för en Pokémon
 function createPokemonCard(pokemon) {
   const card = document.createElement("div");
@@ -126,5 +129,43 @@ const pokemonListElement = document.getElementById("container");
 // Skapa och visa varje Pokémon på sidan
 PokedexData.forEach((pokemon) => {
   const pokemonCard = createPokemonCard(pokemon);
-  pokemonListElement.appendChild(pokemonCard);
+  pokemonListElement.append(pokemonCard);
+});
+
+
+  /*
+  filterBtn.addEventListener ('click', function (){
+      if(type.checked == true) {
+          PokedexData.push(type.value);
+          result.innerHtml = text + PokedexData.join(' / ');
+      } else {
+          console.log('You have unchecked the checkbox');
+      }
+  })
+  */
+
+
+
+
+
+// Funktion för att visa pokemon baserat på valda typer
+filterBtn.addEventListener ('click', function filterPokemon() {
+  // Hämta alla valda typer från checkboxarna
+  const selectedTypes = Array.from(document.querySelectorAll(".type-checkbox:checked")).map(checkbox => checkbox.value);
+
+  // Visa bara pokemon som matchar valda typer
+  const filteredPokemon = PokedexData.filter(pokemon => selectedTypes.includes(pokemon.type));
+
+  // Rensa listan och visa de filtrerade pokemon
+  pokemonListElement.innerHTML = "";
+  filteredPokemon.forEach(pokemon => {
+    const pokemonCard = createPokemonCard(pokemon);
+    pokemonListElement.append(pokemonCard);
+  });
+});
+
+// Övrig kod för att skapa och visa varje Pokémon på sidan
+PokedexData.forEach((pokemon) => {
+  const pokemonCard = createPokemonCard(pokemon);
+  pokemonListElement.append(pokemonCard);
 });
